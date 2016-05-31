@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MessageActivity"
+    android:background="@drawable/drawable"
+    >
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop = "5dp"
+        android:paddingBottom = "2dp"
+        android:src="@drawable/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/connectfirst"
+        android:background="#2cbdff"
+        android:textColor="#ffffff"
+        android:padding="10sp"
+        android:paddingLeft="20sp"
+        android:layout_below="@+id/imageView3"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/lblConnectedTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:padding="5sp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/disconnected"
+        android:textColor="#ffd45700" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/entermessage"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:padding="15sp"
+        android:layout_below="@+id/lblConnectedTo"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textColor="#ffffff"
+        android:padding="10sp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sendout"
+        android:background="#ffffffff"
+        android:textStyle="bold"
+        android:layout_below="@+id/editText1"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/continuous"
+        android:id="@+id/continueBox"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentLeft="true" />
+
+</RelativeLayout>

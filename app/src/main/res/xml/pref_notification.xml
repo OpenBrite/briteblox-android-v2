@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+<EditTextPreference
+    android:name="marquee_length"
+    android:summary="Enter how long the marquee is."
+    android:title="Marquee Length"
+    android:key="marqueeLength"
+    android:defaultValue="2" />
+
+</PreferenceScreen>
