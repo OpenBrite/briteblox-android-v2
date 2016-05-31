@@ -1,8 +1,5 @@
 package com.openbrite.briteblox;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -10,7 +7,11 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,28 +93,44 @@ public class MessageActivity extends Activity {
 		//view.setTag(1);
 		connectedTo = (TextView) findViewById(R.id.lblConnectedTo);
 		continueRun = (CheckBox) findViewById(R.id.continueBox);
-		
+
+        initApp();
+
+	}
+
+	private void initApp(){
 		// Do Bluetooth
 		Log.e("M360PICKUPMGR", "+++ ON CREATE +++");
 		MyApp.mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (MyApp.mBluetoothAdapter == null) {
-			AlertDialog deleteAlert = new AlertDialog.Builder(ctx).create();
+			AlertDialog deleteAlert = new AlertDialog.Builder(new ContextThemeWrapper(ctx, android.R.style.Theme_Dialog)).create();
 			deleteAlert.setTitle("Error");
 			deleteAlert.setMessage("Bluetooth is not available on your device.");
 			deleteAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "OK", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
+                    finish();
 				}
 			});
 			deleteAlert.show();
-			finish();
-		}
-		if (!MyApp.mBluetoothAdapter.isEnabled()) {
-			MyApp.mBluetoothAdapter.enable();
-		}
+		} else if (!isBluetoothAvailable()) {
+            AlertDialog settingsAlert = new AlertDialog.Builder(new ContextThemeWrapper(ctx, android.R.style.Theme_Dialog)).create();
+            settingsAlert.setTitle("Bluetooth not enabled");
+            settingsAlert.setMessage("Bluetooth is required to be on to use this application.");
+            settingsAlert.setButton(DialogInterface.BUTTON_NEUTRAL, "GO TO SETTINGS", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intentOpenBluetoothSettings = new Intent();
+                    intentOpenBluetoothSettings.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+                    startActivity(intentOpenBluetoothSettings);
+                }
+            });
+            settingsAlert.show();
+            //MyApp.mBluetoothAdapter.enable();
+        }
 		Log.e("M360PICKUPMGR", "+++ DONE IN ON CREATE, GOT LOCAL BT ADAPTER +++");
-		
+
 		MyApp.mLogService = new BluetoothLogService(this, this.mHandler);
 
 		/* ************************************************************
@@ -128,11 +144,11 @@ public class MessageActivity extends Activity {
 					MyApp.mLogService.stop();
 					connectBluetooth.setText("Connect to Bluetooth");
 				} else {
-                    //connectBluetooth.setBackgroundColor(956397);
+					//connectBluetooth.setBackgroundColor(956397);
 					Intent intent = new Intent(MessageActivity.this, com.openbrite.briteblox.DeviceListActivity.class);
 					startActivityForResult(intent, DEVICE_SELECT);
 				}
-			}			
+			}
 		});
 
 		/* ************************************************************
@@ -147,7 +163,7 @@ public class MessageActivity extends Activity {
 						mHandler.postDelayed(contRun, timerDelay);
 						runContinue = true;
 						send.setText("Stop");
-   						 view.setTag(0); //pause
+						view.setTag(0); //pause
 					} else {
 						mHandler.removeCallbacks(contRun);
 						runContinue = false;
@@ -155,12 +171,16 @@ public class MessageActivity extends Activity {
 						view.setTag(1);
 					}
 				}
-			}			
+			}
 		});
-
 	}
 
-	/* ************************************************************
+    public static boolean isBluetoothAvailable() {
+        final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return (bluetoothAdapter != null && bluetoothAdapter.isEnabled());
+    }
+
+    /* ************************************************************
 	 * Continually Send a Message
 	 * ************************************************************/
 	public Runnable contRun = new Runnable() {
