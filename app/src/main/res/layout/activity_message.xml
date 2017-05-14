@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MessageActivity"
+    tools:context="com.openbrite.briteblox.MessageActivity"
     android:background="@drawable/drawable"
     >
     <ImageView
@@ -85,4 +85,13 @@
         android:layout_below="@+id/button2"
         android:layout_alignParentLeft="true" />
 
+    <Button
+        android:id="@+id/btnWearable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Wearable editor"
+        android:background="#ffffffff"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

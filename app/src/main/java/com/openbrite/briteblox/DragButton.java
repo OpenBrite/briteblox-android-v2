@@ -44,6 +44,14 @@ public class DragButton extends ImageButton {
         this.index = index;
     }*/
 
+    /**
+     * Getter for the private variable isActivated.
+     * @return Boolean indicating true if the pixel has been selected to be lit.
+     */
+    public Boolean pixelIsActivated() {
+        return isActivated;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         switch (ev.getAction() & MotionEvent.ACTION_MASK) {

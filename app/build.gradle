@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25'
 
     defaultConfig {
         applicationId "com.openbrite.briteblox"
@@ -20,4 +20,5 @@ android {
 
 dependencies {
     compile 'com.android.support:support-v4:23.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
 }
